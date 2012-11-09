@@ -1,0 +1,41 @@
+#haproxy 配置文件
+global
+  maxconn 8000
+  user weidewang
+  group staff
+  daemon
+  quiet
+  nbproc 1
+  pidfile /tmp/haproxy.pid
+	
+
+defaults
+  log global
+  contimeout 50000ms
+  clitimeout 50000ms
+  srvtimeout 50000ms
+  retries 3
+  option redispatch
+  timeout check 2000
+
+
+
+
+frontend ssh_tunnel_socket_proxy_<%=LISTEN_PORT%>
+	mode tcp
+	bind 0.0.0.0:<%=LISTEN_PORT%>
+	default_backend ssh_tunnels
+	
+backend ssh_tunnels
+  mode tcp
+  balance roundrobin
+<%@ssh_tunnel_ports.each do |port|-%>
+	server ssh_tunnel_<%=port%> 127.0.0.1:<%=port%> check inter 2000 rise 2 fall 2
+<%end%>
+	
+
+listen stats 127.0.0.1:4748
+  mode http
+  transparent
+  stats uri /
+  stats admin if TRUE
