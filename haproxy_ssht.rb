@@ -45,7 +45,7 @@ SSH_SERVERS.each_with_index do |server,index|
   start_port += SSH_TUNNEL_COUNT + 1
 end
 
-@ssh_tunnel_ports = SSH_TUNNEL_START_PORT.upto(start_port-1).map{|i| i}
+@ssh_tunnel_ports = SSH_TUNNEL_START_PORT.upto(start_port-1).map{|i| i}.shuffle!
 
 File.open("/tmp/haproxy.cfg","w") do  |f|
   f.write haproxy_cfg.result()
