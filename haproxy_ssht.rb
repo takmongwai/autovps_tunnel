@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/local/rvm/rubies/ruby-1.9.3-p362/bin/ruby
 # encoding: utf-8
 #
 # 生成haproxy配置文件
@@ -17,6 +17,7 @@ curr_dir = File.dirname(path)
 
 haproxy_cfg = ERB.new(File.read(curr_dir + '/haproxy.cfg.erb'),nil,'%<>-')
 sshtunnel_sh = ERB.new(File.read(curr_dir + '/sshtunnel.sh.erb'),nil,'%<>-')
+system("cp #{curr_dir+'/ha_ssh_config'} /tmp/")
 
 LISTEN_ADDRESS = "0.0.0.0"
 #socket 监听端口,客户端连接到这个端口作为代理服务器
@@ -24,9 +25,9 @@ LISTEN_PORT = 1099
 #ssh隧道的起始端口
 SSH_TUNNEL_START_PORT = 18000
 #每个ssh服务器的总连接数
-SSH_TUNNEL_COUNT = 30
+SSH_TUNNEL_COUNT = 200
 #SSH服务器列表
-SSH_SERVERS = %w(vps vps2)
+SSH_SERVERS = %w(vps)
 
 #所有ssh tunnel 的端口
 

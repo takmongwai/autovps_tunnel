@@ -1,9 +1,13 @@
 #!/bin/bash
 kill -9 `ps aux | grep -v grep|grep "autossh" | awk '{print $2}'` 2>&1
-kill -9 `ps aux | grep -v grep | grep "ssh -N -L" | awk '{print $2}'` 2>&1
+kill -9 `ps aux | grep -v grep | grep "/tmp/ha_ssh_config" |grep "ssh" | awk '{print $2}'` 2>&1
+
 <%@ssh_commands.each do |ssh_command|-%>
-autossh -f -N  -M <%=ssh_command[:monitor_port]-%> <%ssh_command[:ports].each do |port|%> -D <%=port%> <%end%> <%=ssh_command[:server]%>
+autossh -f -F /tmp/ha_ssh_config -N  -M <%=ssh_command[:monitor_port]-%> <%ssh_command[:ports].each do |port|%> -D <%=port%> <%end%> <%=ssh_command[:server]%>
 <%end%>
 
-killall -9 haproxy 2>&1
+
+kill -9 `cat /tmp/haproxy.pid` 2>&1
+kill -9 `cat /tmp/haproxy.pid` 2>&1
+sleep 1
 haproxy -f /tmp/haproxy.cfg

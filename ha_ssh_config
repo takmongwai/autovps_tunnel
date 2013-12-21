@@ -1,0 +1,13 @@
+Host vps
+  HostName 184.22.246.27
+  Port 6521
+  TCPKeepAlive yes
+  ServerAliveInterval 5
+  ServerAliveCountMax 5
+  Compression yes
+  CompressionLevel 9
+  Serveraliveinterval 60
+  ForwardAgent yes
+  ControlMaster auto
+  ControlPath /tmp/.master-%r@%h:%p
+  ControlPersist yes

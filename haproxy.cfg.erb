@@ -1,8 +1,8 @@
 #haproxy 配置文件
 global
   maxconn 8000
-  user weidewang
-  group staff
+  user nobody
+  group nogroup
   daemon
   quiet
   nbproc 1
@@ -34,8 +34,8 @@ backend ssh_tunnels
 <%end%>
 	
 
-listen stats 127.0.0.1:4748
+listen stats 0.0.0.0:4748
   mode http
   transparent
   stats uri /
-  stats admin if TRUE
+#  stats admin if TRUE
