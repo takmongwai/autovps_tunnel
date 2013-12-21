@@ -11,3 +11,4 @@ Host vps
   ControlMaster auto
   ControlPath /tmp/.master-%r@%h:%p
   ControlPersist yes
+  AddressFamily inet
