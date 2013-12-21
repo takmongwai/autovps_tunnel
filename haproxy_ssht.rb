@@ -23,7 +23,7 @@ LISTEN_ADDRESS = "0.0.0.0"
 #socket 监听端口,客户端连接到这个端口作为代理服务器
 LISTEN_PORT = 1099
 #ssh隧道的起始端口
-SSH_TUNNEL_START_PORT = 18000
+SSH_TUNNEL_START_PORT = 2200
 #每个ssh服务器的总连接数
 SSH_TUNNEL_COUNT = 200
 #SSH服务器列表
@@ -46,7 +46,7 @@ SSH_SERVERS.each_with_index do |server,index|
   start_port += SSH_TUNNEL_COUNT + 1
 end
 
-@ssh_tunnel_ports = SSH_TUNNEL_START_PORT.upto(start_port-1).map{|i| i}
+@ssh_tunnel_ports = SSH_TUNNEL_START_PORT.upto(start_port-1).map{|i| i}.shuffle!
 
 File.open("/tmp/haproxy.cfg","w") do  |f|
   f.write haproxy_cfg.result()
