@@ -1,4 +1,4 @@
-#!/usr/local/rvm/rubies/ruby-1.9.3-p362/bin/ruby
+#!/usr/bin/env ruby
 # encoding: utf-8
 #
 # 生成haproxy配置文件
